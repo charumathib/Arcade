@@ -7,7 +7,6 @@ Aa aaGame;
 PPAP ppapGame;
 static int flappyHighScore, aaHighScore, ppapHighScore ; 
 PImage pineImage, flappyImage, aaImage ; 
-int highScore ; 
 String gameName ; 
 
 Game game ; 
@@ -148,15 +147,12 @@ void updateHighScore() {
   int score = game.getScore();
   if ( game instanceof Aa ) {     
     aaHighScore = ( aaHighScore < score ) ? score :aaHighScore ;
-    highScore = aaHighScore;
     gameName = "AA";
   } else if ( game instanceof PPAP ) { 
     ppapHighScore = ( ppapHighScore < score ) ? score : ppapHighScore ;
-    highScore = ppapHighScore ;
     gameName = "PPAP" ;
   } else if ( game instanceof FlappyBird) { 
     flappyHighScore = ( flappyHighScore < score ) ? score : flappyHighScore ;
-    highScore = flappyHighScore ;
     gameName = "Flappy" ;
   }
 }
