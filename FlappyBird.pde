@@ -40,7 +40,7 @@ public class FlappyBird extends Score implements Game{
         birds.y>= pole.tube1_y()) { //if bird is lower than top pole
 
         points++;
-        incrementScore();
+        incrementScore(1);
         pole.pointsComputed = true;
       }
     }

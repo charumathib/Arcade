@@ -103,11 +103,13 @@ public class PPAP extends Score implements Game {
       startpos = true;
       aMove = true ; 
       points+=1;
+      incrementScore(1);
       resetPen();
     } else if (hit(pen, pine)) {// if pen hit pear points incremented by 9 and points reset
       startpos2 = true;
       pMove = true ; 
       points+=3;
+      incrementScore(3);
       resetPen();
     } else if ( pen.leftBoundary()) {//if the ben left the boundary, the number of lives decreases and pen is reset
       lives--;

@@ -6,11 +6,6 @@ abstract class Score {
   }
 
 
-  // Helper method to increment score by 1
-  void incrementScore() { 
-    incrementScore(1);
-  }
-
   void incrementScore(int increment) { 
     score += increment;
   }  

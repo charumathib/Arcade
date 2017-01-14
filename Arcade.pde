@@ -6,12 +6,17 @@ FlappyBird flappyGame ;
 Aa aaGame;
 PPAP ppapGame;
 static int flappyHighScore, aaHighScore, ppapHighScore ; 
+PImage pineImage, flappyImage, aaImage ; 
 int highScore ; 
+String gameName ; 
 
 Game game ; 
 
 public void setup() {
   size(700, 700);
+  pineImage = loadImage("picol2-1.png");
+  flappyImage = loadImage("bird_sing.png");
+  aaImage = loadImage("aa-addictive-game.png");
   pineapple = new GImageButton(this, width/2-50, 200, new String[]{"picol2-1.png"} );
   flappyBird = new GImageButton(this, width/4-50, 500, new String[]{"bird_sing.png"});
   Aa = new GImageButton(this, width/4 *3-50, 490, new String[]{"aa-addictive-game.png"});
@@ -110,25 +115,48 @@ public void keyPressed() {
 public void gameOverScreen() {
   if (game.gameOver()) {
     background(0);
+    showScores();
     textSize(64);
     fill(255);
-    text("Score : " + game.getScore(), width/2-150, height/2-50);
-    text("High Score : " + highScore, width/2-250, height/2-150);
-
     backToGame.setVisible(true);
+    image(pineImage, width/2-50, 200);
+    image(flappyImage, width/4-50, 500);
+    image(aaImage, width/4 *3-50, 490);
   }
 }
 
+
+void showScores() { 
+  textSize(32);
+  fill(#2AFF0F);
+  text("Your "+ gameName + " score: " + game.getScore(), 200, 150);
+  textSize(32);
+  fill(#FFDC0F);
+  text("High: " + ppapHighScore, width/2-35, 400);
+  fill(255);
+  text("High: " + ppapHighScore, width/2-38, 400);
+  fill(#0F99FF);
+  text("High: " + flappyHighScore, width/4-90, 600);
+  fill(255);
+  text("High: " + flappyHighScore, width/4-93, 600);
+  fill(#FF0FE8);
+  text("High: " + aaHighScore, width/4*3-30, 600);
+  fill(255);
+  text("High: " + aaHighScore, width/4*3-33, 600);
+}
 void updateHighScore() {
   int score = game.getScore();
   if ( game instanceof Aa ) {     
     aaHighScore = ( aaHighScore < score ) ? score :aaHighScore ;
     highScore = aaHighScore;
+    gameName = "AA";
   } else if ( game instanceof PPAP ) { 
     ppapHighScore = ( ppapHighScore < score ) ? score : ppapHighScore ;
     highScore = ppapHighScore ;
+    gameName = "PPAP" ;
   } else if ( game instanceof FlappyBird) { 
     flappyHighScore = ( flappyHighScore < score ) ? score : flappyHighScore ;
     highScore = flappyHighScore ;
+    gameName = "Flappy" ;
   }
 }
