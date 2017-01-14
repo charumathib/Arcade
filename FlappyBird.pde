@@ -23,10 +23,6 @@ public class FlappyBird implements Game{
   }
 
   public void draw() {
-
-    if ( gameOver) {
-      gameOverScreen();
-    } else { 
       image(backPic, 0, 0, width, height);
       generatePoles();
       birds.draw();
@@ -34,7 +30,6 @@ public class FlappyBird implements Game{
       addPoints1();
       displayPoints();
       isGameOver();
-    }
   }
 
   void addPoints1() {
@@ -133,5 +128,13 @@ public class FlappyBird implements Game{
   }
   
   void keyPressed() { 
+  }
+  
+  boolean gameOver(){
+    return gameOver;
+  }
+  
+  String getScore(){
+    return str(points);
   }
 }

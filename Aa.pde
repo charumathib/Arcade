@@ -4,7 +4,7 @@ public class Aa implements Game {
   float buffer = 0.06 ;
   float angle = 1.0;
   int z = 590;
-  int maxPoles = 30;
+  int maxPoles = 10;
   ArrayList<Spoke> spokes = new ArrayList<Spoke>();
   int spokeNumber = 1 ; 
   boolean stop = false ;
@@ -19,16 +19,12 @@ public class Aa implements Game {
 
 
   void setup() { 
-    initialSpokes(8);
+    initialSpokes(3);
   }
 
   public void draw() {
     if (!gameOver) {
       background(255);
-      if (setInitialVals) {  
-        setup();
-        setInitialVals = false;
-      }
       drawOrbs();
     } else {
       gameOverScreen();
@@ -44,7 +40,7 @@ public class Aa implements Game {
     resetMatrix();
     drawLevel();
     decideMaxPoles();
-    if (spokes.size() == maxPoles+7) {//if the player has attatched all the required poles onto the orb, then the level increases
+    if (spokes.size() == maxPoles + (level*3)) {//if the player has attatched all the required poles onto the orb, then the level increases
       gameChangeScreen();
     }
   }
@@ -74,6 +70,7 @@ public class Aa implements Game {
     float placementAngle = 360/numberOfSpokes ;
     for ( int i = 0; i < numberOfSpokes; i++ ) { 
       spokes.add(new Spoke(BLACK, radians(i * placementAngle), 0));
+      //println("Added " + i) ;
     }
   }
 
@@ -98,7 +95,9 @@ public class Aa implements Game {
         c = PINK;
         gameOver = true;
       }
-      if ( spokeNumber< maxPoles) { //adds spokes to the array list if the spoke can be created
+      if ( spokeNumber <= maxPoles) { //adds spokes to the array list if the spoke can be created
+        //println("Spoke Numebr " + spokeNumber + ":" + maxPoles + ":" + spokes.size() ) ; 
+
         spokes.add(new Spoke(c, spokeAngle, spokeNumber++));
       }
     }
@@ -139,22 +138,11 @@ public class Aa implements Game {
   }
 
   public void decideMaxPoles() {
-    if (level == 1) {//sets the amount of poles the player needs to attatch to the orb
-      maxPoles = 11;
-    } else if (level == 2) {
-      maxPoles = 16;
-    } else if (level == 3) {
-      maxPoles = 19;
-    } else if (level == 4) {
-      maxPoles = 23;
-    } else if (level == 5) {
-      maxPoles = 10;
-    }
     fill(0);
     ellipse(width/2, height-90, 25, 25);
     textSize(32);
     fill(0);
-    text(maxPoles-1 + " : POLES", width/2-75, height-35);
+    text(maxPoles + " : POLES", width/2-75, height-35);
   }
 
   public void gameChangeScreen() {
@@ -186,6 +174,7 @@ public class Aa implements Game {
       level++;
       spokes.clear();
       spokeNumber = 1;
+      initialSpokes(level*3);
       setInitialVals = true;
       drawOrbs();
       alreadyCounted = false;
@@ -198,4 +187,14 @@ public class Aa implements Game {
     textSize(64);
     text("CONGRATULATIONS \n         YOU WIN", 40, height/2-100);
   }
+
+  boolean gameOver() {
+    return gameOver;
+  }
+
+  String getScore() {
+    return str(level * spokeNumber);
+  }
 }
+
+//make a function that takes in parameters for what game it is and displays the score and high score for that specific game as well as the score

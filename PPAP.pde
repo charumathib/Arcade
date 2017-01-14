@@ -127,7 +127,8 @@ public class PPAP implements Game {
     textSize(50);
     text(score, width/2-20, 50);
     if (lives == 0) {//when player runs out of lives, go to end screen
-      gameOverScreen();
+      // gameOverScreen();
+      gameOver = true ;
     }
   }
 
@@ -193,5 +194,13 @@ public class PPAP implements Game {
   }
 
   void mousePressed() {
+  }
+  
+  boolean gameOver(){
+    return gameOver;
+  }
+  
+   String getScore(){
+    return str(score);
   }
 }
