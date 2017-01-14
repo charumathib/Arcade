@@ -1,4 +1,4 @@
-public class Aa implements Game {
+public class Aa extends Score implements Game {
   int level = 1;
   float jitter = 0.02;
   float buffer = 0.06 ;
@@ -90,6 +90,7 @@ public class Aa implements Game {
     if (!gameOver) {
       if ( spokeCanBeCreated(spokeAngle)) { 
         c = BLACK;
+        setScore(level * spokeNumber);
       } else { 
         noStroke();
         c = PINK;
@@ -190,11 +191,7 @@ public class Aa implements Game {
 
   boolean gameOver() {
     return gameOver;
-  }
-
-  String getScore() {
-    return str(level * spokeNumber);
-  }
+  } 
 }
 
 //make a function that takes in parameters for what game it is and displays the score and high score for that specific game as well as the score

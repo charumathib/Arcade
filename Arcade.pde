@@ -1,10 +1,12 @@
 import g4p_controls.*;
 PImage background ;
 GImageButton pineapple, flappyBird, Aa, backToGame;
-boolean flappySwitch, aaSwitch, ppapSwitch , gamesInitialised ; 
+boolean flappySwitch, aaSwitch, ppapSwitch, gamesInitialised ; 
 FlappyBird flappyGame ; 
 Aa aaGame;
 PPAP ppapGame;
+static int flappyHighScore, aaHighScore, ppapHighScore ; 
+int highScore ; 
 
 Game game ; 
 
@@ -28,7 +30,7 @@ void startArcadeScreen() {
 
 
 void initialiseGames() {
-  
+
   if ( aaSwitch) { 
     game = new Aa();
   } else if ( flappySwitch) { 
@@ -49,6 +51,7 @@ public void draw() {
       gameOverScreen();
     } else { 
       game.draw();
+      updateHighScore();
     }
   }
 }
@@ -60,7 +63,7 @@ public void handleButtonEvents(GImageButton button, GEvent event) {
   ppapSwitch = ( button == pineapple );
   if ( button == backToGame ) { 
     startArcadeScreen();
-    gamesInitialised = flappySwitch = aaSwitch = ppapSwitch = false ; 
+    gamesInitialised = flappySwitch = aaSwitch = ppapSwitch = false ;
   }
 }
 
@@ -77,9 +80,9 @@ public void writeNames() {
   fill(255);
   text("PPAP", width/2-38, 400);
   fill(#0F99FF);
-  text("Floppy Bird", width/4-90, 600);
+  text("Flappy Bird", width/4-90, 600);
   fill(255);
-  text("Floppy Bird", width/4-93, 600);
+  text("Flappy Bird", width/4-93, 600);
   fill(#FF0FE8);
   text("Aa", width/4*3-30, 600);
   fill(255);
@@ -110,6 +113,22 @@ public void gameOverScreen() {
     textSize(64);
     fill(255);
     text("Score : " + game.getScore(), width/2-150, height/2-50);
+    text("High Score : " + highScore, width/2-250, height/2-150);
+
     backToGame.setVisible(true);
+  }
+}
+
+void updateHighScore() {
+  int score = game.getScore();
+  if ( game instanceof Aa ) {     
+    aaHighScore = ( aaHighScore < score ) ? score :aaHighScore ;
+    highScore = aaHighScore;
+  } else if ( game instanceof PPAP ) { 
+    ppapHighScore = ( ppapHighScore < score ) ? score : ppapHighScore ;
+    highScore = ppapHighScore ;
+  } else if ( game instanceof FlappyBird) { 
+    flappyHighScore = ( flappyHighScore < score ) ? score : flappyHighScore ;
+    highScore = flappyHighScore ;
   }
 }
