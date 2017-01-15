@@ -1,14 +1,15 @@
 import g4p_controls.*;
 PImage background ;
-GImageButton pineapple, flappyBird, Aa, backToGame;
-boolean flappySwitch, aaSwitch, ppapSwitch, gamesInitialised ; 
+GImageButton pineapple, flappyBird, Aa, backToGame, leader, enter;
+boolean flappySwitch, aaSwitch, ppapSwitch, gamesInitialised, leaderSwitch, nameSwitch; 
 FlappyBird flappyGame ; 
 Aa aaGame;
 PPAP ppapGame;
 static int flappyHighScore, aaHighScore, ppapHighScore ; 
 PImage pineImage, flappyImage, aaImage ; 
-String gameName ; 
-
+String gameName, player ; 
+LeaderBoard leaderboard;
+GTextField name;
 Game game ; 
 
 public void setup() {
@@ -19,8 +20,11 @@ public void setup() {
   pineapple = new GImageButton(this, width/2-50, 200, new String[]{"picol2-1.png"} );
   flappyBird = new GImageButton(this, width/4-50, 500, new String[]{"bird_sing.png"});
   Aa = new GImageButton(this, width/4 *3-50, 490, new String[]{"aa-addictive-game.png"});
-  backToGame = new GImageButton(this, width/2-50, 10, new String[]{"backButton.png"});
-
+  backToGame = new GImageButton(this, 50, 10, new String[]{"backButton.png"});
+  leader = new GImageButton(this, width-135, 10, new String[]{"Leader.png"});
+  enter = new GImageButton(this, width/2-50, height/2+125, new String[]{"imgres-1.png"} );
+  name = new GTextField(this, width/2-100, height/2, 200, 100);
+  leaderboard = new LeaderBoard();
   startArcadeScreen();
 }
 
@@ -30,6 +34,9 @@ void startArcadeScreen() {
   writeNames();
   makeButtonsVisible(true);
   backToGame.setVisible(false);
+  leader.setVisible(false);
+  enter.setVisible(false);
+  name.setVisible(false);
 }
 
 
@@ -52,7 +59,15 @@ public void draw() {
   }
   if ( gamesInitialised ) { 
     if ( game.gameOver()) { 
-      gameOverScreen();
+      enterNameScreen();
+      if (nameSwitch) {
+        gameOverScreen();
+        nameScreenInvisible();
+      }
+      if (leaderSwitch) {
+        leaderboard.draw();
+        nameScreenInvisible();
+      }
     } else { 
       game.draw();
       updateHighScore();
@@ -65,9 +80,16 @@ public void handleButtonEvents(GImageButton button, GEvent event) {
   flappySwitch = (button == flappyBird);
   aaSwitch = ( button == Aa) ;
   ppapSwitch = ( button == pineapple );
+  nameSwitch = (button == enter);
+
+  if ( button == leader) { 
+    leaderSwitch = true ;
+    leaderboard = new LeaderBoard();
+  }
+  
   if ( button == backToGame ) { 
     startArcadeScreen();
-    gamesInitialised = flappySwitch = aaSwitch = ppapSwitch = false ;
+    gamesInitialised = flappySwitch = aaSwitch = ppapSwitch = leaderSwitch = false ;
   }
 }
 
@@ -113,14 +135,22 @@ public void keyPressed() {
 
 public void gameOverScreen() {
   if (game.gameOver()) {
-    background(0);
-    showScores();
-    textSize(64);
-    fill(255);
-    backToGame.setVisible(true);
-    image(pineImage, width/2-50, 200);
-    image(flappyImage, width/4-50, 500);
-    image(aaImage, width/4 *3-50, 490);
+    if (leaderSwitch) {
+      leaderboard.draw();
+      println("drawn");
+      leader.setVisible(false);
+      nameScreenInvisible();
+    } else {
+      background(0);
+      showScores();
+      textSize(64);
+      fill(255);
+      backToGame.setVisible(true);
+      leader.setVisible(true);
+      image(pineImage, width/2-50, 200);
+      image(flappyImage, width/4-50, 500);
+      image(aaImage, width/4 *3-50, 490);
+    }
   }
 }
 
@@ -155,4 +185,15 @@ void updateHighScore() {
     flappyHighScore = ( flappyHighScore < score ) ? score : flappyHighScore ;
     gameName = "Flappy" ;
   }
+}
+
+void enterNameScreen() {
+  background(0);
+  name.setVisible(true);
+  enter.setVisible(true);
+}
+void nameScreenInvisible() {
+  player = name.getText().substring(0, 3).trim();
+  name.setVisible(false);
+  enter.setVisible(false);
 }
