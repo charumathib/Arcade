@@ -1,5 +1,6 @@
 class LeaderBoard { 
   IntDict flappy, ppap, aa;
+ 
 
   LeaderBoard() { 
     flappy = new IntDict(createReader("FLAPPY.txt"));
@@ -30,6 +31,7 @@ class LeaderBoard {
 
   void displayScores() {
     textSize(16);
+    textFont(leaderFont);
     printLeaders(flappy, 80);      
     printLeaders(ppap, width/2 -40);      
     printLeaders(aa, width - 125);
@@ -39,9 +41,9 @@ class LeaderBoard {
     float y = 260 ;
     int counter = 0 ; 
     for ( String names : players.keyArray()  ) { 
-      text(names + " - " + players.get(names), x, y);
+      text(names + " - " + nf(players.get(names), 3),x, y);
       y += 40 ;
-      if ( ++counter > 12) { 
+      if ( ++counter > 9) { 
         break ;
       }
     }

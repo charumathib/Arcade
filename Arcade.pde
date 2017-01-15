@@ -11,6 +11,8 @@ String gameName, player ;
 LeaderBoard leaderboard;
 GTextField name;
 Game game ; 
+FileLoad fileLoad ; 
+PFont leaderFont ; 
 
 public void setup() {
   size(700, 700);
@@ -26,6 +28,7 @@ public void setup() {
   name = new GTextField(this, width/2-100, height/2, 200, 100);
   leaderboard = new LeaderBoard();
   startArcadeScreen();
+  leaderFont = createFont("Monospaced-16.vlw", 16);
 }
 
 void startArcadeScreen() { 
@@ -80,16 +83,22 @@ public void handleButtonEvents(GImageButton button, GEvent event) {
   flappySwitch = (button == flappyBird);
   aaSwitch = ( button == Aa) ;
   ppapSwitch = ( button == pineapple );
-  nameSwitch = (button == enter);
+
+  if ( button == enter ) {
+    nameSwitch = true ;  
+    fileLoad = new FileLoad();
+    player = trim(name.getText().toUpperCase().substring(0, 3));
+    fileLoad.savePlayerScore(game, player);
+  }
 
   if ( button == leader) { 
     leaderSwitch = true ;
     leaderboard = new LeaderBoard();
   }
-  
+
   if ( button == backToGame ) { 
     startArcadeScreen();
-    gamesInitialised = flappySwitch = aaSwitch = ppapSwitch = leaderSwitch = false ;
+    gamesInitialised = flappySwitch = aaSwitch = ppapSwitch = leaderSwitch = nameSwitch = false ;
   }
 }
 
@@ -137,7 +146,6 @@ public void gameOverScreen() {
   if (game.gameOver()) {
     if (leaderSwitch) {
       leaderboard.draw();
-      println("drawn");
       leader.setVisible(false);
       nameScreenInvisible();
     } else {
@@ -193,7 +201,6 @@ void enterNameScreen() {
   enter.setVisible(true);
 }
 void nameScreenInvisible() {
-  player = name.getText().substring(0, 3).trim();
   name.setVisible(false);
   enter.setVisible(false);
 }
