@@ -1,13 +1,13 @@
-public class PPAP implements Game { 
+public class PPAP extends Score implements Game { 
   Pen pen;
   Fruit a, pine, pear;
   boolean gameBegun, showCounters;
   PFont font;
   float alpha = 0;
   int counter = 3 ;
-  int score = 0;
+  int points = 0;
   int lives = 3;
-  int highScore = 0;
+  int highpoints = 0;
   int ySpeed = -5;
   boolean aMove, pMove;
   PImage pineBreak, appleBreak, life ;
@@ -28,6 +28,7 @@ public class PPAP implements Game {
     textFont(font);
     noStroke();
   }
+  
   public void draw() {
     background(#FFC503);
     if ( gameBegun) {//if the game has begun, display game play screen
@@ -53,7 +54,7 @@ public class PPAP implements Game {
 
   public void gamePlay() {
     shapesAreDrawn();
-    setScore();
+    setpoints();
   }
 
   public void numbersComeUp() {
@@ -86,46 +87,50 @@ public class PPAP implements Game {
     text("PRESS ENTER TO BEGIN", 175, 250);
   }
 
-  public void shapesAreDrawn() {//makes different fruits come up at each score interval
-    if (score <=10) {
+  public void shapesAreDrawn() {//makes different fruits come up at each points interval
+    if (points <=10) {
       pen.draw();
       a.draw();
-    } else if (score >10 ) {
+    } else if (points >10 ) {
       pen.draw();
       a.draw();
       pine.draw();
     }
   }
 
-  public void setScore() {
-    if ( hit(pen, a)  ) {//if the pen hit the apple, score incremented by one and pen reset
+  public void setpoints() {
+    if ( hit(pen, a)  ) {//if the pen hit the apple, points incremented by one and pen reset
       startpos = true;
       aMove = true ; 
-      score+=1;
+      points+=1;
+      incrementScore(1);
       resetPen();
-    } else if (hit(pen, pine)) {// if pen hit pear score incremented by 9 and score reset
+    } else if (hit(pen, pine)) {// if pen hit pear points incremented by 9 and points reset
       startpos2 = true;
       pMove = true ; 
-      score+=3;
+      points+=3;
+      incrementScore(3);
       resetPen();
     } else if ( pen.leftBoundary()) {//if the ben left the boundary, the number of lives decreases and pen is reset
       lives--;
       resetPen();
     }
-    if (lives == 1) {//draw one life 
-      oneLife();
-    }
-    if (lives == 2) {//draw two lives
-      twoLives();
-      oneLife();
-    }
-    if (lives == 3) {//draw three lives
-      threeLives();
-      twoLives();
-      oneLife();
-    }
+    
+    drawLives(lives);
+    //if (lives == 1) {//draw one life 
+    //  oneLife();
+    //}
+    //if (lives == 2) {//draw two lives
+    //  twoLives();
+    //  oneLife();
+    //}
+    //if (lives == 3) {//draw three lives
+    //  threeLives();
+    //  twoLives();
+    //  oneLife();
+    //}
     textSize(50);
-    text(score, width/2-20, 50);
+    text(points, width/2-20, 50);
     if (lives == 0) {//when player runs out of lives, go to end screen
       // gameOverScreen();
       gameOver = true ;
@@ -144,25 +149,22 @@ public class PPAP implements Game {
     key = TAB;
   }
 
-  void oneLife() {//draws first life
-    image(life, 500, 15, 40, 43);
-  }
-  void twoLives() {//draws second life
-    image(life, 560, 15, 40, 43);
-  }
-  void threeLives() {//draws third life
-    image(life, 620, 15, 40, 43);
+
+  void drawLives(int lives) { 
+    for ( int i = 0 ; i < lives; i++) { 
+       image(life, 500 + (i * 60), 15, 40, 43);
+    }
   }
 
   void gameOverScreen() {//creates a gameOver screen
     background(0);
     fill(255);
-    if (score > highScore) {//changes high score if player's score is higher than high score
-      highScore = score;
+    if (points > highpoints) {//changes high points if player's points is higher than high points
+      highpoints = points;
     }
     textSize(24);
-    text("Your final score is : " + score, width/2-200, height/2);//score display
-    text("High score : " + highScore, width/2-100, height/2+50);
+    text("Your final points is : " + points, width/2-200, height/2);//points display
+    text("High points : " + highpoints, width/2-100, height/2+50);
   }
 
   public void appleBreaks() {
@@ -195,12 +197,9 @@ public class PPAP implements Game {
 
   void mousePressed() {
   }
-  
-  boolean gameOver(){
+
+  boolean gameOver() {
     return gameOver;
   }
-  
-   String getScore(){
-    return str(score);
-  }
+
 }

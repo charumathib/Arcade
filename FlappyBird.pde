@@ -1,4 +1,4 @@
-public class FlappyBird implements Game{
+public class FlappyBird extends Score implements Game{
 
   PImage backPic, birdImg, groundImg;
   Bird birds;
@@ -9,7 +9,6 @@ public class FlappyBird implements Game{
   int points;
   int highscore;
   Pole p = new Pole();
-
 
 
   public void setup() {
@@ -41,6 +40,7 @@ public class FlappyBird implements Game{
         birds.y>= pole.tube1_y()) { //if bird is lower than top pole
 
         points++;
+        incrementScore(1);
         pole.pointsComputed = true;
       }
     }
@@ -110,16 +110,16 @@ public class FlappyBird implements Game{
     }
   }  
 
-  public void gameOverScreen() {
-    background(0);
-    if (points > highscore) {
-      highscore = points;
-    }
-    fill(255);
-    textSize(50);
-    text("Your score is : " + points, 150, height/2-100);
-    text("Highscore : " + highscore, 200, height/2);
-  }
+  //public void gameOverScreen() {
+  //  background(0);
+  //  if (points > highscore) {
+  //    highscore = points;
+  //  }
+  //  fill(255);
+  //  textSize(50);
+  //  text("Your score is : " + points, 150, height/2-100);
+  //  text("Highscore : " + highscore, 200, height/2);
+  //}
 
   void displayPoints() {
     textSize(64);
@@ -133,8 +133,5 @@ public class FlappyBird implements Game{
   boolean gameOver(){
     return gameOver;
   }
-  
-  String getScore(){
-    return str(points);
-  }
+ 
 }
