@@ -41,6 +41,7 @@ public class FlappyBird extends Score implements Game{
 
         points++;
         incrementScore(1);
+        flappyPoints.play();
         pole.pointsComputed = true;
       }
     }
@@ -63,6 +64,7 @@ public class FlappyBird extends Score implements Game{
         return hit ;
       }
     }
+    flappyDeath.play();
     return hit ;
   }
 

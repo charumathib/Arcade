@@ -1,4 +1,5 @@
 import g4p_controls.*;
+import processing.sound.*;
 PImage background ;
 GImageButton pineapple, flappyBird, Aa, backToGame, leader, enter;
 boolean flappySwitch, aaSwitch, ppapSwitch, gamesInitialised, leaderSwitch, nameSwitch; 
@@ -13,6 +14,7 @@ GTextField name;
 Game game ; 
 FileLoad fileLoad ; 
 PFont leaderFont ; 
+SoundFile flappyWings, flappyPoints, flappyDeath, arcadeScreen, AaSound, ppapSound;
 
 public void setup() {
   size(700, 700);
