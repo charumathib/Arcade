@@ -1,4 +1,4 @@
-public class FlappyBird extends Score implements Game{
+public class FlappyBird extends Score implements Game {
 
   PImage backPic, birdImg, groundImg;
   Bird birds;
@@ -12,23 +12,25 @@ public class FlappyBird extends Score implements Game{
 
 
   public void setup() {
+    arcadeScreen.stop();
     birds = new Bird();
     ground = new Ground();
     backPic = loadImage("skyline2.jpg");
     birds.setup();
     ground.setup();
-    
-    
   }
 
   public void draw() {
-      image(backPic, 0, 0, width, height);
-      generatePoles();
-      birds.draw();
-      ground.draw();
-      addPoints1();
-      displayPoints();
-      isGameOver();
+    image(backPic, 0, 0, width, height);
+    generatePoles();
+    birds.draw();
+    ground.draw();
+    addPoints1();
+    displayPoints();
+    isGameOver();
+    if (isGameOver()) {
+      flappyDeath.play();
+    }
   }
 
   void addPoints1() {
@@ -64,7 +66,6 @@ public class FlappyBird extends Score implements Game{
         return hit ;
       }
     }
-    flappyDeath.play();
     return hit ;
   }
 
@@ -112,28 +113,18 @@ public class FlappyBird extends Score implements Game{
     }
   }  
 
-  //public void gameOverScreen() {
-  //  background(0);
-  //  if (points > highscore) {
-  //    highscore = points;
-  //  }
-  //  fill(255);
-  //  textSize(50);
-  //  text("Your score is : " + points, 150, height/2-100);
-  //  text("Highscore : " + highscore, 200, height/2);
-  //}
+
 
   void displayPoints() {
     textSize(64);
     fill(255);
     text(points, width/2-25, 100);
   }
-  
-  void keyPressed() { 
+
+  void keyPressed() {
   }
-  
-  boolean gameOver(){
+
+  boolean gameOver() {
     return gameOver;
   }
- 
 }

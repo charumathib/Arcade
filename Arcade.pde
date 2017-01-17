@@ -16,6 +16,7 @@ FileLoad fileLoad ;
 PFont leaderFont ; 
 SoundFile flappyWings, flappyPoints, flappyDeath, arcadeScreen, AaSound, ppapSound;
 
+
 public void setup() {
   size(700, 700);
   pineImage = loadImage("picol2-1.png");
@@ -28,6 +29,7 @@ public void setup() {
   leader = new GImageButton(this, width-135, 10, new String[]{"Leader.png"});
   enter = new GImageButton(this, width/2-50, height/2+125, new String[]{"imgres-1.png"} );
   name = new GTextField(this, width/2-100, height/2, 200, 100);
+  initialiseMusic();
   leaderboard = new LeaderBoard();
   startArcadeScreen();
   leaderFont = createFont("Monospaced-16.vlw", 16);
@@ -35,6 +37,7 @@ public void setup() {
 
 void startArcadeScreen() { 
   background = loadImage("cool-dark-backgrounds-wallpaper-2.jpg");
+  arcadeScreen.loop();
   image(background, 0, 0, width, height);
   writeNames();
   makeButtonsVisible(true);
@@ -205,4 +208,13 @@ void enterNameScreen() {
 void nameScreenInvisible() {
   name.setVisible(false);
   enter.setVisible(false);
+}
+
+void initialiseMusic() {
+
+  arcadeScreen = new SoundFile(this, "ARCADE.aif");
+  flappyDeath = new SoundFile(this, "FLAPPYDEATH.aif");
+  flappyPoints = new SoundFile(this, "FLAPPYPOINTS.mp3");
+  flappyWings = new SoundFile(this, "FLAPPYWINGS.mp3");
+  AaSound = new SoundFile(this, "AA.aif");
 }

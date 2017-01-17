@@ -23,6 +23,7 @@ public class Aa extends Score implements Game {
   }
 
   public void draw() {
+    arcadeScreen.stop();
     if (!gameOver) {
       background(255);
       drawOrbs();
@@ -70,7 +71,6 @@ public class Aa extends Score implements Game {
     float placementAngle = 360/numberOfSpokes ;
     for ( int i = 0; i < numberOfSpokes; i++ ) { 
       spokes.add(new Spoke(BLACK, radians(i * placementAngle), 0));
-      //println("Added " + i) ;
     }
   }
 
@@ -90,10 +90,12 @@ public class Aa extends Score implements Game {
     if (!gameOver) {
       if ( spokeCanBeCreated(spokeAngle)) { 
         c = BLACK;
+        AaSound.play();
         setScore(level * spokeNumber);
       } else { 
         noStroke();
         c = PINK;
+        flappyDeath.play();
         gameOver = true;
       }
       if ( spokeNumber <= maxPoles) { //adds spokes to the array list if the spoke can be created
@@ -191,7 +193,7 @@ public class Aa extends Score implements Game {
 
   boolean gameOver() {
     return gameOver;
-  } 
+  }
 }
 
 //make a function that takes in parameters for what game it is and displays the score and high score for that specific game as well as the score
