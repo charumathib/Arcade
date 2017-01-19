@@ -1,2 +1,3 @@
-ACH	3
-BAD	2
+
+ERK	4
+AWE	5

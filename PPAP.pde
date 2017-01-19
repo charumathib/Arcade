@@ -23,13 +23,16 @@ public class PPAP extends Score implements Game {
     appleBreak = loadImage("picol2-4.png");
     pineBreak = loadImage("picol2-3.png");
     life = loadImage("url.png");
-
     font  = loadFont("ArialRoundedMTBold-48.vlw");//loads and sets font
     textFont(font);
     noStroke();
   }
   
+  void finalDraw() { 
+  }
+  
   public void draw() {
+    arcadeScreen.stop();
     background(#FFC503);
     if ( gameBegun) {//if the game has begun, display game play screen
       gamePlay();
@@ -89,6 +92,8 @@ public class PPAP extends Score implements Game {
 
   public void shapesAreDrawn() {//makes different fruits come up at each points interval
     if (points <=10) {
+      textSize(32);
+      text("PRESS 'S' TO SHOOT", width/2-150, height/2);
       pen.draw();
       a.draw();
     } else if (points >10 ) {
@@ -103,12 +108,14 @@ public class PPAP extends Score implements Game {
       startpos = true;
       aMove = true ; 
       points+=1;
+      flappyPoints.play();
       incrementScore(1);
       resetPen();
     } else if (hit(pen, pine)) {// if pen hit pear points incremented by 9 and points reset
       startpos2 = true;
       pMove = true ; 
       points+=3;
+      flappyPoints.play();
       incrementScore(3);
       resetPen();
     } else if ( pen.leftBoundary()) {//if the ben left the boundary, the number of lives decreases and pen is reset
@@ -117,18 +124,6 @@ public class PPAP extends Score implements Game {
     }
     
     drawLives(lives);
-    //if (lives == 1) {//draw one life 
-    //  oneLife();
-    //}
-    //if (lives == 2) {//draw two lives
-    //  twoLives();
-    //  oneLife();
-    //}
-    //if (lives == 3) {//draw three lives
-    //  threeLives();
-    //  twoLives();
-    //  oneLife();
-    //}
     textSize(50);
     text(points, width/2-20, 50);
     if (lives == 0) {//when player runs out of lives, go to end screen

@@ -14,7 +14,8 @@ GTextField name;
 Game game ; 
 FileLoad fileLoad ; 
 PFont leaderFont ; 
-SoundFile flappyWings, flappyPoints, flappyDeath, arcadeScreen, AaSound, ppapSound;
+SoundFile flappyPoints, flappyDeath, arcadeScreen, aaHit, aaMiss, ppapSound;
+boolean showOnce = true ; 
 
 
 public void setup() {
@@ -45,6 +46,7 @@ void startArcadeScreen() {
   leader.setVisible(false);
   enter.setVisible(false);
   name.setVisible(false);
+  showOnce = true ; 
 }
 
 
@@ -67,6 +69,11 @@ public void draw() {
   }
   if ( gamesInitialised ) { 
     if ( game.gameOver()) { 
+      if ( showOnce )  { 
+        game.finalDraw(); 
+        showOnce = false ;
+        delay(1000); // Freeze the screen for 1-2 seconds to show what the player did wrong
+      }
       enterNameScreen();
       if (nameSwitch) {
         gameOverScreen();
@@ -214,7 +221,7 @@ void initialiseMusic() {
 
   arcadeScreen = new SoundFile(this, "ARCADE.aif");
   flappyDeath = new SoundFile(this, "FLAPPYDEATH.aif");
-  flappyPoints = new SoundFile(this, "FLAPPYPOINTS.mp3");
-  flappyWings = new SoundFile(this, "FLAPPYWINGS.mp3");
-  AaSound = new SoundFile(this, "AA.aif");
+  flappyPoints = new SoundFile(this, "FLAPPYPOINTS.aif");
+  aaHit = new SoundFile(this, "AA.aif");
+  aaMiss = new SoundFile(this, "FLAPPYDEATH.aif");
 }

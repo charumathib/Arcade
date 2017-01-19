@@ -3,7 +3,7 @@ class LeaderBoard {
  
 
   LeaderBoard() { 
-    flappy = new IntDict(createReader("FLAPPY.txt"));
+    flappy = new IntDict(createReader("Flappy.txt"));
     ppap = new IntDict(createReader("PPAP.txt"));
     aa = new IntDict(createReader("AA.txt"));
     flappy.sortValuesReverse();
@@ -26,7 +26,6 @@ class LeaderBoard {
     image(pineImage, width/2-40, 95, 75, 125);
     image(aaImage, width-140, 140);
     fill(255);
-    //rect(0, 225, width, 10);
   }
 
   void displayScores() {

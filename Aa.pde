@@ -90,17 +90,15 @@ public class Aa extends Score implements Game {
     if (!gameOver) {
       if ( spokeCanBeCreated(spokeAngle)) { 
         c = BLACK;
-        AaSound.play();
+        aaHit.play();
         setScore(level * spokeNumber);
       } else { 
-        noStroke();
         c = PINK;
-        flappyDeath.play();
+        println("PRINTING PINK");
+        aaMiss.play();
         gameOver = true;
       }
       if ( spokeNumber <= maxPoles) { //adds spokes to the array list if the spoke can be created
-        //println("Spoke Numebr " + spokeNumber + ":" + maxPoles + ":" + spokes.size() ) ; 
-
         spokes.add(new Spoke(c, spokeAngle, spokeNumber++));
       }
     }
@@ -127,6 +125,7 @@ public class Aa extends Score implements Game {
     return true ;
   }
 
+  // Part of the standalone game
   public void gameOverScreen() {
     background(255);
     fill(0);
@@ -193,6 +192,12 @@ public class Aa extends Score implements Game {
 
   boolean gameOver() {
     return gameOver;
+  }
+
+  // Make sure that this portion of the code is fixed
+  void finalDraw() { 
+    background(255);
+    drawOrbs();
   }
 }
 

@@ -2,7 +2,7 @@ class FileLoad {
 
   String[] aaArr = loadStrings("AA.txt");
   String[] ppapArr = loadStrings("PPAP.txt");
-  String[] flappyArr = loadStrings("FLAPPY.txt");
+  String[] flappyArr = loadStrings("Flappy.txt");
 
   FileLoad() {
   }
@@ -11,7 +11,8 @@ class FileLoad {
     String userScore = name + "\t" + game.getScore();
     if ( game instanceof FlappyBird) { 
       flappyArr = append(flappyArr, userScore);
-      saveStrings("FLAPPY.txt", flappyArr);
+      saveStrings("Flappy.txt", flappyArr);
+      println("appended");
     } else if ( game instanceof Aa ) { 
       aaArr = append(aaArr, userScore);
       saveStrings("AA.txt", aaArr);

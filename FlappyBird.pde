@@ -22,15 +22,25 @@ public class FlappyBird extends Score implements Game {
 
   public void draw() {
     image(backPic, 0, 0, width, height);
+    fill(0);
+
     generatePoles();
     birds.draw();
     ground.draw();
+    if (points<=10) {
+      textSize(20);
+      text("CLICK TO FLY", width/2-75, height-25);
+    }
     addPoints1();
     displayPoints();
     isGameOver();
     if (isGameOver()) {
       flappyDeath.play();
     }
+  }
+
+  void finalDraw() { 
+    //Nothing
   }
 
   void addPoints1() {
