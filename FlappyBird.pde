@@ -27,23 +27,25 @@ public class FlappyBird extends Score implements Game {
     generatePoles();
     birds.draw();
     ground.draw();
-    if (points<=10) {
-      textSize(20);
-      text("CLICK TO FLY", width/2-75, height-25);
-    }
-    addPoints1();
+    showHints();
+    addPoints();
     displayPoints();
-    isGameOver();
     if (isGameOver()) {
       flappyDeath.play();
     }
   }
 
+  void showHints() { 
+    if (points<=10) {
+      textSize(20);
+      text("CLICK TO FLY", width/2-75, height-25);
+    }
+  }
   void finalDraw() { 
     //Nothing
   }
 
-  void addPoints1() {
+  void addPoints() {
     for ( Pole pole : poles ) {
       if ( birds.x+ birds.thickness() >= pole.x && // if the bird is in between the top and bottom poles
         birds.x+ birds.thickness() <=pole.x+pole.thickness() && // if the bird has not left the two poles

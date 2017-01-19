@@ -194,11 +194,8 @@ public class Aa extends Score implements Game {
     return gameOver;
   }
 
-  // Make sure that this portion of the code is fixed
   void finalDraw() { 
-    background(255);
-    drawOrbs();
+    stop = true;
+    draw();
   }
 }
-
-//make a function that takes in parameters for what game it is and displays the score and high score for that specific game as well as the score

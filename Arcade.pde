@@ -16,6 +16,7 @@ FileLoad fileLoad ;
 PFont leaderFont ; 
 SoundFile flappyPoints, flappyDeath, arcadeScreen, aaHit, aaMiss, ppapSound;
 boolean showOnce = true ; 
+int start, now ; 
 
 
 public void setup() {
@@ -46,7 +47,7 @@ void startArcadeScreen() {
   leader.setVisible(false);
   enter.setVisible(false);
   name.setVisible(false);
-  showOnce = true ; 
+  showOnce = true ;
 }
 
 
@@ -69,23 +70,27 @@ public void draw() {
   }
   if ( gamesInitialised ) { 
     if ( game.gameOver()) { 
-      if ( showOnce )  { 
-        game.finalDraw(); 
-        showOnce = false ;
-        delay(1000); // Freeze the screen for 1-2 seconds to show what the player did wrong
-      }
-      enterNameScreen();
-      if (nameSwitch) {
-        gameOverScreen();
-        nameScreenInvisible();
-      }
-      if (leaderSwitch) {
-        leaderboard.draw();
-        nameScreenInvisible();
+      if ( showOnce ) { 
+        if ( secondsElapsed(2)) { 
+          showOnce = false ;
+        } else { 
+          game.finalDraw();
+        }
+      } else {
+        enterNameScreen();
+        if (nameSwitch) {
+          gameOverScreen();
+          nameScreenInvisible();
+        }
+        if (leaderSwitch) {
+          leaderboard.draw();
+          nameScreenInvisible();
+        }
       }
     } else { 
       game.draw();
       updateHighScore();
+      start = millis();
     }
   }
 }
@@ -224,4 +229,11 @@ void initialiseMusic() {
   flappyPoints = new SoundFile(this, "FLAPPYPOINTS.aif");
   aaHit = new SoundFile(this, "AA.aif");
   aaMiss = new SoundFile(this, "FLAPPYDEATH.aif");
+}
+
+
+boolean secondsElapsed(float seconds) { 
+  now = millis();
+  float duration = (now - start)/1000 ; 
+  return duration >= seconds ;
 }
